@@ -1,0 +1,15 @@
+<service>
+
+  <id>PrintAgent - ERP-S3B</id>
+
+  <name>ERP Print Agent - S3B</name>
+
+  <description>ERP Print Agent - S3B</description>
+
+  <executable>node.exe</executable>
+
+  <arguments>src/server.js</arguments>
+
+  <log mode="roll"/>
+
+</service>
