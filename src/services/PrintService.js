@@ -1,10 +1,6 @@
 import TicketFactory from '../factories/TicketFactory.js';
 import TemplateFactory from '../factories/TemplateFactory.js';
-
-import {
-    createPrinter,
-    checkPrinter
-} from '../config/printer.js';
+import PrinterFactory from '../factories/PrinterFactory.js';
 
 export default class PrintService {
 
@@ -12,20 +8,13 @@ export default class PrintService {
 
         const { metadata, printer, document, options } = payload;
 
-        const printerDevice = createPrinter(
-            printer.ip,
-            printer.port
-        );
-
-        await checkPrinter(
-            printerDevice
-        );
+        const printerDevice = await PrinterFactory.create(printer);
 
         const copies = options?.copies || 1;
 
         for (let copy = 0; copy < copies; copy++) {
 
-            printerDevice.clear();
+            printerDevice.clear?.();
 
             const ticket = TicketFactory.create(
                 printerDevice,
@@ -65,7 +54,7 @@ export default class PrintService {
         }
 
         if (open_drawer) {
-            ticket.openDrawer();
+            ticket.openDrawer?.();
         }
 
     }

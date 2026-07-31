@@ -5,10 +5,7 @@ export default class Ticket58 extends BaseTicket {
 
     constructor(printer) {
 
-        super(
-            printer,
-            ticket58
-        );
+        super(printer, ticket58);
 
     }
 

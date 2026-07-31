@@ -1,4 +1,5 @@
 import MoneyHelper from '../helpers/MoneyHelper.js';
+import ColumnPrinter from '../helpers/ColumnPrinter.js';
 
 export default class ProductPrinter {
 
@@ -6,7 +7,7 @@ export default class ProductPrinter {
 
         this.ticket = ticket;
         this.layout = ticket.layout;
-        this.columns = ticket.columns;
+        this.columns = new ColumnPrinter(ticket);
 
     }
 

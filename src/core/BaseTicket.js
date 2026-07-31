@@ -15,6 +15,7 @@ export default class BaseTicket {
     constructor(printer, layout) {
 
         this.printer = printer;
+
         this.layout = layout;
 
         this.width = layout.width;
@@ -279,6 +280,31 @@ export default class BaseTicket {
     doubleHeight() {
 
         this.printer.setTextDoubleHeight();
+
+    }
+
+    openDrawer() {
+
+        if (typeof this.printer.openCashDrawer !== 'function') {
+            console.warn(
+                'La impresora no soporta apertura de gaveta'
+            );
+
+            return;
+        }
+
+        try {
+
+            this.printer.openCashDrawer();
+
+        } catch (error) {
+
+            console.error(
+                'Error al abrir gaveta:',
+                error.message
+            );
+
+        }
 
     }
 

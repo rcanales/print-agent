@@ -2,8 +2,8 @@ import WrapHelper from './WrapHelper.js';
 
 export default class ColumnPrinter {
 
-    constructor(printer) {
-        this.printer = printer;
+    constructor(ticket) {
+        this.ticket = ticket;
     }
 
     /**
