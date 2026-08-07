@@ -49,7 +49,6 @@ export default class BaseTicket {
     }
 
     line(char = '-') {
-
         char = String(char).charAt(0) || '-';
 
         this.printer.println(
@@ -75,7 +74,7 @@ export default class BaseTicket {
     left(text = '') {
 
         WrapHelper
-            .wrap(text, this.width)
+            .wrap(text, this.width, true)
             .forEach(line => this.printer.println(line));
 
     }
@@ -85,7 +84,7 @@ export default class BaseTicket {
         this.printer.alignCenter();
 
         WrapHelper
-            .wrap(text, this.width)
+            .wrap(text, this.width, true)
             .forEach(line => this.printer.println(line));
 
         this.printer.alignLeft();
@@ -97,10 +96,32 @@ export default class BaseTicket {
         this.printer.alignRight();
 
         WrapHelper
-            .wrap(text, this.width)
+            .wrap(text, this.width, true)
             .forEach(line => this.printer.println(line));
 
         this.printer.alignLeft();
+
+    }
+
+    /**
+     * Imprime una línea respetando espacios y posiciones.
+     * Usar para tablas y formatos de columnas fijas.
+     */
+    raw(text = '') {
+
+        this.printer.println(
+            String(text)
+        );
+
+    }
+
+    shortLine(length = 15, char = '-') {
+
+        const line = char.repeat(length);
+
+        this.printer.println(
+            line.padStart(this.width)
+        );
 
     }
 
@@ -111,7 +132,7 @@ export default class BaseTicket {
         this.printer.setTextDoubleHeight();
 
         WrapHelper
-            .wrap(text, this.width)
+            .wrap(text, this.width, true)
             .forEach(line => this.printer.println(line));
 
         this.printer.setTextNormal();
@@ -126,7 +147,7 @@ export default class BaseTicket {
         this.printer.bold(true);
 
         WrapHelper
-            .wrap(text, this.width)
+            .wrap(text, this.width, true)
             .forEach(line => this.printer.println(line));
 
         this.printer.bold(false);
@@ -141,6 +162,50 @@ export default class BaseTicket {
         this.subtitle(title);
 
         this.line();
+
+    }
+
+    sectionTitle(title = '', char = '-') {
+
+        title = String(title).trim();
+
+        if (!title) {
+            return this.line(char);
+        }
+
+        const text = ` ${title.toUpperCase()} `;
+
+        const remaining = this.width - text.length;
+
+        const left = Math.floor(remaining / 2);
+        const right = remaining - left;
+
+        this.printer.println(
+            char.repeat(left) +
+            text +
+            char.repeat(right)
+        );
+
+    }
+
+    fieldLine(label, amount, options = {}) {
+
+        const {
+            bold = false,
+            separator = ':'
+        } = options;
+
+        const text = `${label}${separator}`;
+
+        if (bold) {
+            this.bold(true);
+        }
+
+        this.money(text, amount);
+
+        if (bold) {
+            this.bold(false);
+        }
 
     }
 

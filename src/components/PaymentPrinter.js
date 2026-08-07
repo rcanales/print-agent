@@ -11,26 +11,19 @@ export default class PaymentPrinter {
      */
     print(data = {}) {
 
-        const payment = data.payment ?? {};
-
-        const payments = payment.payments ?? [];
+        const payments = data.payments ?? [];
 
         if (!payments.length) {
             return;
         }
 
-        this.ticket.section('PAGOS');
+        this.ticket.sectionTitle(
+            'MÉTODOS DE PAGO'
+        );
 
         this.printPayments(payments);
 
-        if ((payment.change ?? 0) > 0) {
-
-            this.ticket.money(
-                'Cambio',
-                payment.change
-            );
-
-        }
+        this.ticket.blank();
 
     }
 
@@ -46,27 +39,20 @@ export default class PaymentPrinter {
             .forEach(item => {
 
                 this.ticket.money(
-                    this.buildLabel(item),
+                    item.method,
                     item.amount
                 );
 
+                if ((item.change ?? 0) > 0) {
+
+                    this.ticket.money(
+                        'Cambio',
+                        item.change
+                    );
+
+                }
+
             });
-
-    }
-
-    /**
-     * Construye la etiqueta del método de pago.
-     *
-     * @param {Object} item
-     * @returns {String}
-     */
-    buildLabel(item) {
-
-        if (item.code) {
-            return `${item.code} ${item.method}`;
-        }
-
-        return item.method;
 
     }
 

@@ -11,19 +11,19 @@ export default class DocumentPrinter {
      */
     print(data = {}) {
 
-        const document = data.document ?? {};
+        const header = data.header ?? {};
 
         this.ticket.section(
-            document.title ?? 'FACTURA ELECTRÓNICA'
+            header.title ?? 'FACTURA ELECTRÓNICA'
         );
 
-        if (document.type) {
-            this.ticket.subtitle(document.type);
+        if (header.type) {
+            this.ticket.subtitle(header.type);
         }
 
         this.ticket.blank();
 
-        this.printFields(document);
+        this.printFields(header);
 
     }
 

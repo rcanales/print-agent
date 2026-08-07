@@ -13,11 +13,13 @@ export default class CustomerPrinter {
 
         const customer = data.customer ?? {};
 
-        this.ticket.section(
-            'DATOS DEL RECEPTOR'
+        this.ticket.sectionTitle(
+            'DATOS DEL COMPRADOR'
         );
 
         this.printFields(customer);
+
+        this.ticket.blank();
 
     }
 
@@ -60,12 +62,16 @@ export default class CustomerPrinter {
 
         return [
             {
-                label: 'Documento',
-                value: customer.document
+                label: 'Fecha de emisión',
+                value: customer.issue_date
             },
             {
                 label: 'Nombre',
                 value: customer.name
+            },
+            {
+                label: customer.document_type,
+                value: customer.document_number
             },
             {
                 label: 'Departamento',
@@ -81,13 +87,18 @@ export default class CustomerPrinter {
                 type: 'block'
             },
             {
+                label: 'Giro',
+                value: customer.giro,
+                type: 'block'
+            },
+            {
                 label: 'Correo',
                 value: customer.email
             },
             {
                 label: 'Teléfono',
                 value: customer.phone
-            }
+            },
         ];
 
     }

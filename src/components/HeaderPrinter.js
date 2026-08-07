@@ -6,68 +6,65 @@ export default class HeaderPrinter {
 
     print(data = {}) {
 
+        const header = data.header ?? {};
         const business = data.business ?? {};
-        const document = data.document ?? {};
+
+        this.printHeader(header);
 
         this.printBusiness(business);
 
-        this.printOrder(document);
+        this.ticket.blank();
+    }
+
+    printHeader(header) {
+
+        if (header.title) {
+            this.ticket.center(header.title);
+        }
+
+        if (header.number) {
+            this.ticket.center(header.number);
+        }
+
+        this.ticket.blank();
 
     }
 
     printBusiness(business) {
 
+        this.ticket.sectionTitle(
+            'DATOS DEL EMISOR'
+        );
+
         if (business.name) {
-            this.ticket.title(business.name);
-        }
-
-        if (business.email) {
-            this.ticket.center(business.email);
-        }
-
-        if (business.phone) {
-            this.ticket.center(`Tel: ${business.phone}`);
+            this.ticket.center(business.name);
         }
 
         this.ticket.blank();
-
-        if (business.nit) {
-            this.ticket.keyValue('NIT', business.nit);
-        }
 
         if (business.nrc) {
-            this.ticket.keyValue('NRC', business.nrc);
+            this.ticket.center(
+                `NRC: ${business.nrc}`
+            );
         }
 
-        this.ticket.blank();
+        if (business.nit) {
+            this.ticket.center(
+                `NIT: ${business.nit}`
+            );
+        }
 
         if (business.address) {
-            this.ticket.block(
-                'Dirección',
+            this.ticket.center(
                 business.address
             );
         }
 
         if (business.activity) {
-            this.ticket.block(
-                'Giro',
-                business.activity
+            this.ticket.center(
+                this.ticket.keyValue('Giro', business.activity)
             );
         }
-
-    }
-
-    printOrder(document) {
-
-        if (!document.order) {
-            return;
-        }
-
-        this.ticket.title(
-            `ORDEN #${document.order}`
-        );
-
-        this.ticket.blank();
 
     }
 

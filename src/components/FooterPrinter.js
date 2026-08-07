@@ -17,7 +17,7 @@ export default class FooterPrinter {
             return;
         }
 
-        this.ticket.section('INFORMACIÓN');
+        this.ticket.sectionTitle('INFORMACIÓN ADICIONAL');
 
         this.printLegends(footer);
 
@@ -100,6 +100,18 @@ export default class FooterPrinter {
 
         if (!footer.message) {
             return;
+        }
+
+        if (footer.cashier) {
+            this.ticket.center(
+                `Cajero: ${footer.cashier}`
+            )
+        }
+
+        if (footer.branch) {
+            this.ticket.center(
+                `Sucursal: ${footer.branch}`
+            )
         }
 
         this.ticket.blank();

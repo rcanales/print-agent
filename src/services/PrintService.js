@@ -41,16 +41,11 @@ export default class PrintService {
 
         const {
             feed = 0,
-            cut = true,
             open_drawer = false,
         } = options;
 
         if (feed > 0) {
             ticket.feed(feed);
-        }
-
-        if (cut) {
-            ticket.cut();
         }
 
         if (open_drawer) {

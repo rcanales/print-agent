@@ -1,7 +1,11 @@
+import MoneyHelper from '../helpers/MoneyHelper.js';
+
 export default class TotalsPrinter {
 
     constructor(ticket) {
+
         this.ticket = ticket;
+
     }
 
     /**
@@ -13,16 +17,45 @@ export default class TotalsPrinter {
 
         const totals = data.totals ?? {};
 
-        this.ticket.section('TOTALES');
+        this.printSummary(totals);
 
-        this.printFields(totals);
-
-        this.printGrandTotal(totals);
+        this.printAmountInWords(totals.inwords);
 
     }
 
+
     /**
-     * Imprime los campos de totales.
+     * Imprime el resumen final de venta.
+     *
+     * @param {Object} totals
+     */
+    printSummary(totals) {
+
+        this.ticket.shortLine();
+
+        this.ticket.right(
+            `SUBTOTAL: ${MoneyHelper.currency(totals.subtotal)}`
+        );
+
+
+        this.ticket.shortLine();
+
+        this.ticket.right(
+            `Descuento aplicado: ${MoneyHelper.currency(totals.discount)}`
+        );
+
+
+        this.ticket.shortLine();
+
+        this.ticket.right(
+            `TOTAL: ${MoneyHelper.currency(totals.total)}`
+        );
+
+    }
+
+
+    /**
+     * Impresión tradicional de campos.
      *
      * @param {Object} totals
      */
@@ -32,8 +65,10 @@ export default class TotalsPrinter {
             .filter(field => this.hasValue(field.value))
             .forEach(field => {
 
+
                 const printerMethod =
                     field.type ?? 'money';
+
 
                 if (
                     typeof this.ticket[printerMethod] !== 'function'
@@ -41,21 +76,18 @@ export default class TotalsPrinter {
                     return;
                 }
 
+
                 this.ticket[printerMethod](
                     field.label,
                     field.value
                 );
 
+
             });
 
     }
 
-    /**
-     * Construye la lista de campos.
-     *
-     * @param {Object} totals
-     * @returns {Array}
-     */
+
     buildFields(totals) {
 
         return [
@@ -103,50 +135,31 @@ export default class TotalsPrinter {
             {
                 label: 'Otros Tributos',
                 value: totals.otherTaxes
-            },
-
-            {
-                label: 'TOTAL',
-                value: totals.total
             }
 
         ];
 
     }
 
+    printAmountInWords(value) {
 
-    printGrandTotal(totals) {
-
-        if (!this.hasValue(totals.total)) {
+        if (!value) {
             return;
         }
 
+
         this.ticket.blank();
 
-        this.ticket.doubleLine();
 
-        this.ticket.bold(true);
-        this.ticket.doubleHeight();
-
-        this.ticket.money(
-            'TOTAL A PAGAR',
-            totals.total
+        this.ticket.center(
+            value.toUpperCase()
         );
 
-        this.ticket.normal();
-        this.ticket.bold(false);
-
-        this.ticket.doubleLine();
 
         this.ticket.blank();
 
     }
 
-    /**
-     * Determina si un valor debe imprimirse.
-     *
-     * Se imprimen los valores 0.00.
-     */
     hasValue(value) {
 
         return value !== undefined &&

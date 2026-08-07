@@ -6,8 +6,6 @@ export default class SaleTicket extends BaseTemplate {
 
         this.header(data);
 
-        this.document(data);
-
         this.customer(data);
 
         this.products(data);

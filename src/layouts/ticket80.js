@@ -1,18 +1,31 @@
 export default {
 
-    width: 48,
+    width: 42,
 
     separator: '-',
 
-    qr: {
-        cellSize: 6,
-        correction: 'M'
-    },
-
     columns: {
-        qty: 5,
-        description: 33,
-        total: 10
+
+        quantity: {
+            start: 0,
+            width: 4
+        },
+
+        description: {
+            start: 5,
+            width: 24
+        },
+
+        price: {
+            start: 30,
+            width: 6
+        },
+
+        amount: {
+            start: 37,
+            width: 5
+        }
+
     },
 
     margins: {
