@@ -11,19 +11,18 @@ export default class DocumentPrinter {
      */
     print(data = {}) {
 
-        const header = data.header ?? {};
+        const dte = data.dte ?? {};
+        const footer = data.footer ?? {};
 
-        this.ticket.section(
-            header.title ?? 'FACTURA ELECTRÓNICA'
+        this.ticket.sectionTitle(
+            'DOCUMENTO'
         );
 
-        if (header.type) {
-            this.ticket.subtitle(header.type);
-        }
+        this.printFields(dte);
+
+        this.printQr(footer);
 
         this.ticket.blank();
-
-        this.printFields(header);
 
     }
 
@@ -47,9 +46,14 @@ export default class DocumentPrinter {
                     return;
                 }
 
+                const options = {
+                    align: field.align ?? 'left'
+                };
+
                 this.ticket[printerMethod](
                     field.label,
-                    field.value
+                    field.value,
+                    options
                 );
 
             });
@@ -108,13 +112,15 @@ export default class DocumentPrinter {
             },
             {
                 label: 'Código Generación',
-                value: document.generationCode,
-                type: 'block'
+                value: document.generatedcode,
+                type: 'block',
+                align: 'center'
             },
             {
-                label: 'Sello',
-                value: document.receivedSeal,
-                type: 'block'
+                label: 'Sello de Recepción',
+                value: document.receivedseal,
+                type: 'block',
+                align: 'center'
             },
             {
                 label: 'Modelo',
@@ -129,6 +135,21 @@ export default class DocumentPrinter {
                 value: document.control
             }
         ];
+
+    }
+
+    /**
+     * Código QR.
+     */
+    printQr(footer) {
+
+        if (!footer.qr) {
+            return;
+        }
+
+        this.ticket.qr(
+            footer.qr
+        );
 
     }
 

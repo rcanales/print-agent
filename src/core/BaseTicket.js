@@ -230,14 +230,35 @@ export default class BaseTicket {
 
     }
 
-    block(label, value = '') {
+    block(label, value = '', options = {}) {
 
-        if (!value)
+        if (!value) {
             return;
+        }
+
+        const {
+            align = 'left'
+        } = options;
+
+        const print = (text) => {
+
+            if (align === 'center') {
+                this.center(text);
+                return;
+            }
+
+            if (align === 'right') {
+                this.right(text);
+                return;
+            }
+
+            this.left(text);
+
+        };
 
         this.bold(true);
 
-        this.left(label);
+        print(label);
 
         this.bold(false);
 
@@ -246,10 +267,9 @@ export default class BaseTicket {
                 String(value),
                 this.width
             )
-            .forEach(line => this.left(line));
+            .forEach(line => print(line));
 
         this.blank();
-
     }
 
     keyValue(label, value = '') {

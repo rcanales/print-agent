@@ -26,6 +26,10 @@ export default class HeaderPrinter {
             this.ticket.center(header.number);
         }
 
+        if (header.subtitle) {
+            this.ticket.center(header.subtitle);
+        }
+
         this.ticket.blank();
 
     }

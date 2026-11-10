@@ -6,8 +6,6 @@ export default class ElectronicInvoiceTemplate extends BaseTemplate {
 
         this.header(data);
 
-        this.document(data);
-
         this.customer(data);
 
         this.products(data);
@@ -15,6 +13,8 @@ export default class ElectronicInvoiceTemplate extends BaseTemplate {
         this.totals(data);
 
         this.payment(data);
+
+        this.document(data);
 
         this.footer(data);
 

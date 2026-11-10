@@ -27,8 +27,6 @@ export default class FooterPrinter {
 
         this.printMessage(footer);
 
-        this.printQr(footer);
-
     }
 
     /**
