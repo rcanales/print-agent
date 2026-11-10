@@ -4,6 +4,11 @@ export default {
 
     separator: '-',
 
+    logo: {
+        enabled: true,
+        width: 500,
+    },
+
     columns: {
 
         quantity: {
@@ -29,8 +34,8 @@ export default {
     },
 
     margins: {
-        left: 0,
-        right: 0
+        left: 1,
+        right: 1,
     },
 
     fonts: {

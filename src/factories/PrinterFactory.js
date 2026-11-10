@@ -1,4 +1,5 @@
 import FakePrinter from '../drivers/FakePrinter.js';
+import BluetoothPrinter from '../drivers/BluetoothPrinter.js';
 
 import {
     createPrinter,
@@ -9,24 +10,58 @@ export default class PrinterFactory {
 
     static async create(printer) {
 
-        // Modo pruebas
         if (process.env.PRINTER_DRIVER === 'fake') {
-
-            return new FakePrinter(
-                printer.width
-            );
-
+            return new FakePrinter(printer.width);
         }
 
-        // Modo real
-        const device = createPrinter(
-            printer.ip,
-            printer.port
-        );
+        const connectionType = printer.connection_type ?? 'network';
 
-        await checkPrinter(device);
+        switch (connectionType) {
 
-        return device;
+            case 'network': {
+
+                const device = createPrinter(
+                    printer.ip_address ?? printer.ip,
+                    printer.port
+                );
+
+                await checkPrinter(device);
+
+                return device;
+            }
+
+            case 'bluetooth': {
+
+                if (!printer.com_port) {
+                    throw new Error(
+                        'No se ha configurado el puerto COM de la impresora Bluetooth'
+                    );
+                }
+
+                return new BluetoothPrinter({
+                    com_port: printer.com_port,
+                    baud_rate: printer.baud_rate ?? 9600,
+                    width: printer.width,
+                    supports_cut: printer.supports_cut ?? false,
+                });
+
+            }
+
+            case 'usb': {
+
+                throw new Error(
+                    'El transporte USB todavía no está implementado'
+                );
+
+            }
+
+            default:
+
+                throw new Error(
+                    `Tipo de conexión no soportado: ${connectionType}`
+                );
+
+        }
 
     }
 

@@ -4,15 +4,38 @@ export default {
 
     separator: '-',
 
+    logo: {
+        enabled: true,
+        width: 300,
+    },
+
     qr: {
         cellSize: 4,
         correction: 'M'
     },
 
     columns: {
-        qty: 4,
-        description: 20,
-        total: 8
+
+        quantity: {
+            start: 0,
+            width: 3
+        },
+
+        description: {
+            start: 4,
+            width: 15
+        },
+
+        price: {
+            start: 20,
+            width: 5
+        },
+
+        amount: {
+            start: 26,
+            width: 6
+        }
+
     },
 
     margins: {

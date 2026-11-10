@@ -1,10 +1,11 @@
 import WrapHelper from '../helpers/WrapHelper.js';
 import MoneyHelper from '../helpers/MoneyHelper.js';
 
-import ProductPrinter from '../components/ProductPrinter.js';
+import LogoPrinter from '../components/LogoPrinter.js';
 import HeaderPrinter from '../components/HeaderPrinter.js';
 import DocumentPrinter from '../components/DocumentPrinter.js';
 import CustomerPrinter from '../components/CustomerPrinter.js';
+import ProductPrinter from '../components/ProductPrinter.js';
 import SummaryPrinter from '../components/SummaryPrinter.js';
 import TotalsPrinter from '../components/TotalsPrinter.js';
 import PaymentPrinter from '../components/PaymentPrinter.js';
@@ -29,6 +30,8 @@ export default class BaseTicket {
     }
 
     initializeComponents() {
+
+        this.logo = new LogoPrinter(this);
 
         this.header = new HeaderPrinter(this);
 

@@ -64,9 +64,9 @@ export default class HeaderPrinter {
             );
         }
 
-        if (business.activity) {
+        if (business.giro) {
             this.ticket.center(
-                this.ticket.keyValue('Giro', business.activity)
+                `GIRO: ${business.giro}`
             );
         }
 

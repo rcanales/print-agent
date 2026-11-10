@@ -4,6 +4,10 @@ export default class BaseTemplate {
         this.ticket = ticket;
     }
 
+    async logo() {
+        await this.ticket.logo.print();
+    }
+
     header(data = {}) {
         this.ticket.header.print(data);
     }

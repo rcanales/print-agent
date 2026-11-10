@@ -2,7 +2,9 @@ import BaseTemplate from './BaseTemplate.js';
 
 export default class SaleTicket extends BaseTemplate {
 
-    print(data = {}) {
+    async print(data = {}) {
+
+        await this.logo();
 
         this.header(data);
 

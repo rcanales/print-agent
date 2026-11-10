@@ -32,7 +32,6 @@ export default class ProductPrinter {
 
     }
 
-
     printHeader() {
 
         this.ticket.sectionTitle(
@@ -47,6 +46,10 @@ export default class ProductPrinter {
                 'Valor'
             )
         );
+        this.ticket.left('MAYUSCULAS: Á É Í Ó Ú');
+        this.ticket.left('minusculas: á é í ó ú');
+        this.ticket.left('PRUEBA: Ñ Ó');
+        this.ticket.left('prueba: ñ ó');
 
         this.ticket.line();
 

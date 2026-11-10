@@ -2,7 +2,9 @@ import BaseTemplate from './BaseTemplate.js';
 
 export default class ElectronicInvoiceTemplate extends BaseTemplate {
 
-    print(data = {}) {
+    async print(data = {}) {
+
+        await this.logo();
 
         this.header(data);
 

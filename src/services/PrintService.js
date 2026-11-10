@@ -1,3 +1,4 @@
+
 import TicketFactory from '../factories/TicketFactory.js';
 import TemplateFactory from '../factories/TemplateFactory.js';
 import PrinterFactory from '../factories/PrinterFactory.js';
@@ -6,11 +7,19 @@ export default class PrintService {
 
     async print(payload) {
 
-        const { metadata, printer, document, options } = payload;
+        const {
+            metadata,
+            printer,
+            document,
+            options
+        } = payload;
 
         const printerDevice = await PrinterFactory.create(printer);
 
-        const copies = options?.copies || 1;
+        const copies = Math.max(
+            1,
+            Number.parseInt(options?.copies, 10) || 1
+        );
 
         for (let copy = 0; copy < copies; copy++) {
 
@@ -26,15 +35,14 @@ export default class PrintService {
                 ticket
             );
 
-            template.print(
-                document
-            );
+            // Esperar a que termine de procesarse toda la plantilla.
+            await template.print(document);
 
             this.applyOptions(ticket, options);
 
+            // Ejecutar la impresión una vez preparado el ticket.
             await ticket.execute();
         }
-
     }
 
     applyOptions(ticket, options = {}) {
@@ -51,7 +59,5 @@ export default class PrintService {
         if (open_drawer) {
             ticket.openDrawer?.();
         }
-
     }
-
 }
