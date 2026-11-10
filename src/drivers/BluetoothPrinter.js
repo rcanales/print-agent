@@ -268,9 +268,14 @@ export default class BluetoothPrinter {
             0x1B, 0x74, this.codePageCommand // ESC t n: seleccionar página
         ]);
 
+        const finalFeed = Buffer.from([
+            0x1B, 0x64, 0x03 // ESC d 3: avanzar 3 líneas
+        ]);
+
         const data = Buffer.concat([
             initialization,
-            ...this.buffer
+            ...this.buffer,
+            finalFeed
         ]);
 
         const port = new SerialPort({

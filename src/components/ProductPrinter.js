@@ -46,15 +46,10 @@ export default class ProductPrinter {
                 'Valor'
             )
         );
-        this.ticket.left('MAYUSCULAS: Á É Í Ó Ú');
-        this.ticket.left('minusculas: á é í ó ú');
-        this.ticket.left('PRUEBA: Ñ Ó');
-        this.ticket.left('prueba: ñ ó');
 
         this.ticket.line();
 
     }
-
 
     printItem(item) {
 
@@ -65,7 +60,6 @@ export default class ProductPrinter {
             this.columns.description.width
 
         );
-
 
         lines.forEach((description, index) => {
 
@@ -95,7 +89,6 @@ export default class ProductPrinter {
 
     }
 
-
     buildLine(quantity, description, price, amount) {
 
         const buffer =
@@ -116,7 +109,6 @@ export default class ProductPrinter {
 
         );
 
-
         this.write(
 
             buffer,
@@ -130,7 +122,6 @@ export default class ProductPrinter {
             'left'
 
         );
-
 
         this.write(
 
@@ -146,7 +137,6 @@ export default class ProductPrinter {
 
         );
 
-
         this.write(
 
             buffer,
@@ -161,11 +151,9 @@ export default class ProductPrinter {
 
         );
 
-
         return buffer.join('');
 
     }
-
 
     write(buffer, start, value, width, align = 'left') {
 
@@ -187,7 +175,6 @@ export default class ProductPrinter {
 
         }
 
-
         for (let i = 0; i < width; i++) {
 
             buffer[start + i] = value[i];
@@ -195,7 +182,6 @@ export default class ProductPrinter {
         }
 
     }
-
 
     printExtras(item) {
 
@@ -206,7 +192,6 @@ export default class ProductPrinter {
             );
 
         }
-
 
         if (Number(item.discount) > 0) {
 

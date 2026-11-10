@@ -93,8 +93,7 @@ export default class PrintWorker {
                 `Trabajo ${job.job_id} impreso correctamente.`
             );
 
-        }
-        catch (error) {
+        } catch (error) {
 
             logger.error?.(error) ??
                 logger.log(error.message);
